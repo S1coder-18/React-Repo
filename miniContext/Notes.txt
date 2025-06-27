@@ -1,0 +1,69 @@
+⚛️ React Context API (Deep Dive Notes)
+✅ 1. UserContext.js
+First, we create a context — suppose UserContext.
+
+We import createContext from React library.
+
+Store it in a variable and export it.
+
+import { createContext } from "react";
+export const UserContext = createContext();
+
+UserContext gives us a Provider component.
+
+It's like a wrapper that can share data with its child components.
+
+🔽 We use it like this:
+
+<UserContext.Provider value={/* some data */}>
+   {/* components that need access */}
+</UserContext.Provider>
+❗ Just using <UserContext> will NOT work — we always use <UserContext.Provider> to share data.
+
+✅ 2. Create Store (UserContextProvider)
+We create a custom component UserContextProvider.
+
+Inside it, we return:
+<UserContext.Provider value={/* shared data */}>
+    {children}
+</UserContext.Provider>
+
+{children} means all the components wrapped inside this provider will have access to the context data.
+
+Inside value, we can pass:
+
+state (created with useState)
+
+functions
+
+objects
+
+anything we want to share globally
+
+✅ 3. Wrapping Components with Provider
+We use UserContextProvider to wrap the components that need access to the context data.
+
+<UserContextProvider>
+   <App />
+</UserContextProvider>
+
+Now any component inside <App /> can access the shared context.
+
+
+✅ 4. How to Send Data to Store (Set Context Value)
+To update or send data into the store, we use useContext along with the setter function defined inside the provider.
+
+Example:
+
+const { setUser } = useContext(UserContext);
+
+
+✅ 5. How to Fetch or Use Context Data
+We can also access context data using useContext.
+
+const { user } = useContext(UserContext);
+
+We can then use it like:
+
+<h2>Welcome, {user.userName}</h2>
+<p>Password is: {user.password}</p>  // just for example, not recommended to show passwords
